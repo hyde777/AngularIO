@@ -3,7 +3,8 @@
 import {Pokemon} from "./Pokemon"
 
 export class Round {
-
+    damage: number = 0;
+    defendingPokeIsKo: boolean = false;
     constructor(public attackingPokemon: Pokemon, public defendingPokemon: Pokemon){
         this.attackingPokemon = attackingPokemon;
         this.defendingPokemon = defendingPokemon;
@@ -17,14 +18,13 @@ export class Round {
     }
     
     private applyDamage(): void {
-        let damage = this.calculateDamage();
-        this.defendingPokemon.lifepoint = this.defendingPokemon.lifepoint - damage;
+        this.damage = this.calculateDamage();
+        this.defendingPokemon.lifepoint = this.defendingPokemon.lifepoint - this.damage;
     }
 
-    Fight(): boolean {
+    Fight(): void {
         this.applyDamage();
         if(this.defendingPokemon.lifepoint <= 0)
-            return true;
-        else return false;
+            this.defendingPokeIsKo = true;
     }
 }

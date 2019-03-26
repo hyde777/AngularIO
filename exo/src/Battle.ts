@@ -2,6 +2,7 @@ import {Round} from './Round';
 import {Pokemon} from './Pokemon';
 
 export class Battle {
+    currentRound: number = 0;
     rounds: Round[];
     endOfBattle: boolean = false;
     winner: Pokemon;
@@ -11,30 +12,40 @@ export class Battle {
     }
 
     FightUntilKo(poke1: Pokemon, poke2: Pokemon) : void {
+        let fastPoke: Pokemon;
+        let slowPoke: Pokemon;
+        if(poke1.isFasterThan(poke2))
+        {
+            fastPoke = poke1;
+            slowPoke = poke2;
+        }
+        else
+        {
+            fastPoke = poke2;
+            slowPoke = poke1;
+        }
+        
         while (!this.endOfBattle)
         {
-            if(poke1.isFasterThan(poke2))
-            {
-                this.rounds.push(new Round(poke1, poke2));
-                this.rounds.push(new Round(poke2, poke1));
-            }
-            else
-            {
-                this.rounds.push(new Round(poke2, poke1));
-                this.rounds.push(new Round(poke1, poke2));
-            }
-    
-            let isKo : boolean = this.rounds[0].Fight();
-            if(isKo) {
-                this.winner = this.rounds[0].attackingPokemon;
-                this.loser = this.rounds[0].defendingPokemon;
+            this.rounds.push(new Round(fastPoke, slowPoke));
+            const attackerPhase = this.rounds[this.currentRound];
+            attackerPhase.Fight();
+            let isKoAttac : boolean = attackerPhase.defendingPokeIsKo;
+            if(isKoAttac) {
+                this.winner = attackerPhase.attackingPokemon;
+                this.loser = attackerPhase.defendingPokemon;
+                this.endOfBattle = true;
                 return;
             }
 
-            isKo = this.rounds[1].Fight();
-            if(isKo){
-                this.winner = this.rounds[1].attackingPokemon;
-                this.loser = this.rounds[1].defendingPokemon;
+            this.rounds.push(new Round(slowPoke, fastPoke));
+            const defenderPhase = this.rounds[this.currentRound];
+            defenderPhase.Fight();
+            let isKoDefending = defenderPhase.defendingPokeIsKo;
+            if(isKoDefending){
+                this.winner = defenderPhase.attackingPokemon;
+                this.loser = defenderPhase.defendingPokemon;
+                this.endOfBattle = true;
                 return;
             }
         }

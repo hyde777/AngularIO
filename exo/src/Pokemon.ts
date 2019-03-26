@@ -4,6 +4,7 @@ export class Pokemon {
     public attackStat: number;
     public defensiveStat: number;
     public lifepoint: number;
+    public maxLifepoint: number;
     public moveBasePower: number;
     public speed: number;
 
@@ -34,6 +35,11 @@ export class Pokemon {
         return this;
     }
 
+    withMaxLifePoint(maxLifepoint: number): Pokemon {
+        this.maxLifepoint = maxLifepoint;
+        return this;
+    }
+
     withMoveBasePower(moveBasePower: number) : Pokemon {
         this.moveBasePower = moveBasePower;
         return this;
@@ -43,6 +49,3 @@ export class Pokemon {
         return this.speed > poke.speed ? true : false;
     }
 }
-
-let carapuce = new Pokemon("carapuce", 5).withSpeed(60);
-console.log(carapuce.speed);
