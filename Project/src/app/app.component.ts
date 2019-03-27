@@ -14,11 +14,11 @@ export class AppComponent {
   backPokemon: Pokemon;
   frontPokemon: Pokemon;
 
-  backPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/smicons-pokeball-sheet.png';
-  frontPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/smicons-pokeball-sheet.png';
+  backPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani-back/ambipom.gif'; // 'https://play.pokemonshowdown.com/sprites/smicons-pokeball-sheet.png';
+  frontPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani/pikachu.gif'; // 'https://play.pokemonshowdown.com/sprites/smicons-pokeball-sheet.png';
 
   battle: Battle;
-  constructor () {
+  constructor() {
     this.backPokemon = new Pokemon('carapuce', 5);
     this.backPokemon.withAttackStat(10).withDefensiveStat(10)
         .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
