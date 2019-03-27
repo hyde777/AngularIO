@@ -32,6 +32,7 @@ export class Battle {
     FightSlower(): void {
         this.RunRound(new Round(this.slowPoke, this.fastPoke));
     }
+    
     private RunRound(round: Round) {
         this.rounds.push(round);
         const phase = this.rounds[this.currentRound];

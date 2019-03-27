@@ -44,6 +44,8 @@ export class AppComponent {
     if(this.pause)
     {
       clearInterval(this.interval);
+      this.backPokemonRatio = Math.floor(this.backPokemon.lifepoint / this.backPokemon.maxLifepoint * 100);
+      this.frontPokemonRatio = Math.floor(this.frontPokemon.lifepoint / this.frontPokemon.maxLifepoint * 100);
       this.pauseTxt = 'PLAY';
     }
     else
