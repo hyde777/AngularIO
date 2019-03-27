@@ -20,7 +20,7 @@
       <img [attr.src]=backPokemonUrlImg alt="">
     </div>
     <div class=".col-sm-4 justify-content-center">
-      <button type="button" class="btn btn-success">PLAY / PAUSE</button>
+        <button type="button" (click)="onPause()" class="btn btn-success">{{pauseTxt}}</button>
     </div>
     <div class=".col-sm-4 justify-content-end">
       <img [attr.src]=frontPokemonUrlImg alt="">
