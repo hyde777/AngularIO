@@ -1,6 +1,7 @@
 <div class="progress">
-  <div [className]="'progress-bar bg-' + status + ' w-' + percentLife" role="progressbar"
-       aria-valuemin="0" aria-valuemax="100">
+  <div [className]="'progress-bar bg-' + status" role="progressbar"
+    [ngStyle]="{'width.%': percentLife}"
+    aria-valuemin="0" aria-valuemax="100">
     {{percentLife}}%
   </div>
 </div>

@@ -10,7 +10,7 @@
   <div class="row justify-content-end">
     <div class="col-sm-4 lightBackGround">
       <div class="alignRight">{{frontPokemon.lifepoint}}/{{frontPokemon.maxLifepoint}}</div>
-      <app-progress-bar class="nb" [percentLife]="100"></app-progress-bar>
+      <app-progress-bar class="nb" [percentLife]=backPokemonRatio></app-progress-bar>
       <div class="alignCenter">{{frontPokemon.name}}</div>
     </div>
   </div>
@@ -30,7 +30,7 @@
   <div class="row justify-content-start">
     <div class="col-sm-4 lightBackGround">
       <div class="alignCenter">{{backPokemon.name}}</div>
-      <app-progress-bar [percentLife]="100"></app-progress-bar>
+      <app-progress-bar [percentLife]=frontPokemonRatio></app-progress-bar>
       <div>{{backPokemon.lifepoint}}/{{backPokemon.maxLifepoint}}</div>
     </div>
     <div class="col-sm-3">
