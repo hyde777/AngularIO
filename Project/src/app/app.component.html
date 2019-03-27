@@ -9,9 +9,9 @@
 
   <div class="row justify-content-end">
     <div class="col-sm-4">
-      <div>{{frontPokemonName}}</div>
+      <div>{{frontPokemon.name}}</div>
       <app-progress-bar [value]="100"></app-progress-bar>
-      <div class="alignRight">{{frontPokemonCurrentLife}}/{{frontPokemonTotalLife}}</div>
+      <div class="alignRight">{{frontPokemon.lifepoint}}/{{frontPokemon.maxLifepoint}}</div>
       <div class="alignCenter">
         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" alt="">
       </div>
@@ -29,9 +29,9 @@
       <div class="alignCenter">
         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png" alt="">
       </div>
-      <div class="alignRight">{{backPokemonName}}</div>
+      <div class="alignRight">{{backPokemon.name}}</div>
       <app-progress-bar [value]="100"></app-progress-bar>
-      <div>{{backPokemonCurrentLife}}/{{backPokemonTotalLife}}</div>
+      <div>{{backPokemon.lifepoint}}/{{backPokemon.maxLifepoint}}</div>
     </div>
     <div class="col-sm-3">
     </div>
