@@ -6,6 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'our project';
-  value = 25;
+  title = 'Battle Arena';
+
+  backPokemonCurrentLife = 0;
+  backPokemonTotalLife = 0;
+  backPokemonName = 'backPokemonName';
+
+  frontPokemonCurrentLife = 0;
+  frontPokemonTotalLife = 0;
+  frontPokemonName = 'frontPokemonName';
+
 }
