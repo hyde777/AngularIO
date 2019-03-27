@@ -13,7 +13,10 @@ export class AppComponent {
   urlImgBackground = 'assets/img/Battle_Arena.png';
 
   backPokemon : Pokemon;
+  backPokemonRatio : number;
   frontPokemon : Pokemon;
+  frontPokemonRatio : number;
+
   pause:boolean = true;
   pauseTxt: 'PAUSE' | 'PLAY' = 'PLAY';
   battle: Battle;
@@ -26,11 +29,12 @@ export class AppComponent {
     this.backPokemon = new Pokemon('carapuce', 5);
     this.backPokemon.withAttackStat(10).withDefensiveStat(10)
         .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
-
+    this.backPokemonRatio = this.backPokemon.lifepoint / this.backPokemon.maxLifepoint * 100;
 
     this.frontPokemon = new Pokemon('bulbizarre', 5);
     this.frontPokemon.withAttackStat(7).withDefensiveStat(12)
         .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
+    this.frontPokemonRatio = Math.floor(this.frontPokemon.lifepoint / this.frontPokemon.maxLifepoint) * 100;
 
     this.battle = new Battle(this.frontPokemon, this.backPokemon);
   }
@@ -53,10 +57,12 @@ export class AppComponent {
   {
     let cbFast = () => {
       this.battle.FightFaster();
+      this.backPokemonRatio = Math.floor(this.backPokemon.lifepoint / this.backPokemon.maxLifepoint * 100);
       clearInterval(this.interval);
 
       this.interval = setInterval(() => {
         this.battle.FightSlower();
+        this.frontPokemonRatio = Math.floor(this.frontPokemon.lifepoint / this.frontPokemon.maxLifepoint * 100);
         clearInterval(this.interval);
         this.interval = setInterval(cbFast, 1000);
       }, 1000);
