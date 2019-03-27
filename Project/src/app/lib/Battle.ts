@@ -7,32 +7,27 @@ export class Battle {
     endOfBattle: boolean = false;
     winner: Pokemon;
     loser: Pokemon;
-    constructor(){
-        this.rounds = [];
-    }
+    slowPoke: Pokemon;
+    fastPoke: Pokemon;
 
-    FightUntilKo(poke1: Pokemon, poke2: Pokemon) : void {
-        let fastPoke: Pokemon;
-        let slowPoke: Pokemon;
+    constructor(poke1: Pokemon, poke2: Pokemon){
+        this.rounds = [];
         if(poke1.isFasterThan(poke2))
         {
-            fastPoke = poke1;
-            slowPoke = poke2;
+            this.fastPoke = poke1;
+            this.slowPoke = poke2;
         }
         else
         {
-            fastPoke = poke2;
-            slowPoke = poke1;
+            this.fastPoke = poke2;
+            this.slowPoke = poke1;
         }
         
-        while (!this.endOfBattle)
-        {
-            setTimeout(() => {}, 1000);
-            this.RunRound(new Round(fastPoke, slowPoke));
+    }
 
-            setTimeout(() => {}, 1000);
-            this.RunRound(new Round(slowPoke, fastPoke));
-        }
+    FightUntilKo() : void {
+        this.RunRound(new Round(this.fastPoke, this.slowPoke));
+        this.RunRound(new Round(this.slowPoke, this.fastPoke));
     }
 
     RunRound(round: Round) {
@@ -46,5 +41,6 @@ export class Battle {
             this.endOfBattle = true;
             return;
         }
+        this.currentRound++;
     }
 }
