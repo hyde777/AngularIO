@@ -33,7 +33,6 @@ export class AppComponent {
         .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
 
     this.battle = new Battle(this.frontPokemon, this.backPokemon);
-    
   }
 
   onPause() {
@@ -41,13 +40,28 @@ export class AppComponent {
     if(this.pause)
     {
       clearInterval(this.interval);
-      this.pauseTxt = "PLAY";
+      this.pauseTxt = 'PLAY';
     }
     else
     {
-      this.interval = setInterval(() => this.battle.FightUntilKo(), 2000);
-      this.pauseTxt = "PAUSE";
+      this.FightUntilKo()
+      this.pauseTxt = 'PAUSE';
+    }
+  }
+
+  FightUntilKo()
+  {
+    let cbFast = () => {
+      this.battle.FightFaster();
+      clearInterval(this.interval);
+
+      this.interval = setInterval(() => {
+        this.battle.FightSlower();
+        clearInterval(this.interval);
+        this.interval = setInterval(cbFast, 1000);
+      }, 1000);
     }
 
+    this.interval = setInterval(cbFast, 1000);
   }
 }

@@ -25,12 +25,14 @@ export class Battle {
         
     }
 
-    FightUntilKo() : void {
+    FightFaster() : void {
         this.RunRound(new Round(this.fastPoke, this.slowPoke));
-        this.RunRound(new Round(this.slowPoke, this.fastPoke));
     }
 
-    RunRound(round: Round) {
+    FightSlower(): void {
+        this.RunRound(new Round(this.slowPoke, this.fastPoke));
+    }
+    private RunRound(round: Round) {
         this.rounds.push(round);
         const phase = this.rounds[this.currentRound];
         phase.Fight();
