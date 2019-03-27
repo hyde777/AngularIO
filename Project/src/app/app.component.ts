@@ -15,7 +15,7 @@ export class AppComponent {
   backPokemon : Pokemon;
   frontPokemon : Pokemon;
   pause:boolean = true;
-  pauseTxt: string ="PLAY";
+  pauseTxt: 'PAUSE' | 'PLAY' = 'PLAY';
   battle: Battle;
   interval: any;
 
@@ -37,6 +37,7 @@ export class AppComponent {
   }
 
   onPause() {
+    this.pause = !this.pause;
     if(this.pause)
     {
       clearInterval(this.interval);
@@ -47,6 +48,6 @@ export class AppComponent {
       this.interval = setInterval(() => this.battle.FightUntilKo(), 2000);
       this.pauseTxt = "PAUSE";
     }
-    this.pause = !this.pause;
+
   }
 }
