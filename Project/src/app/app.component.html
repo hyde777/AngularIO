@@ -5,30 +5,30 @@
   </h1>
 </div>
 
-<div class="container greenBackground">
+<div class="container" [style.background-image]="'url(' + urlImgBackground + ')'" [ngStyle]="{'background-size': 'cover','background-repeat': 'no-repeat'}">
 
   <div class="row justify-content-end">
     <div class="col-sm-4">
       <div>{{frontPokemon.name}}</div>
-      <app-progress-bar [value]="100"></app-progress-bar>
+      <app-progress-bar class="nb" [value]="100"></app-progress-bar>
       <div class="alignRight">{{frontPokemon.lifepoint}}/{{frontPokemon.maxLifepoint}}</div>
-      <div class="alignCenter">
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" alt="">
-      </div>
     </div>
   </div>
 
-  <div class="row justify-content-around">
-    <div class=".col-sm-4 .offset-sm-4 .alignCenter">
+  <div class="row">
+    <div class=".col-sm-4 justify-content-start">
+      <img [attr.src]=backPokemonUrlImg alt="">
+    </div>
+    <div class=".col-sm-4 justify-content-center">
       <button type="button" class="btn btn-success">PLAY / PAUSE</button>
+    </div>
+    <div class=".col-sm-4 justify-content-end">
+      <img [attr.src]=frontPokemonUrlImg alt="">
     </div>
   </div>
 
   <div class="row justify-content-start">
     <div class="col-sm-4">
-      <div class="alignCenter">
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png" alt="">
-      </div>
       <div class="alignRight">{{backPokemon.name}}</div>
       <app-progress-bar [value]="100"></app-progress-bar>
       <div>{{backPokemon.lifepoint}}/{{backPokemon.maxLifepoint}}</div>
