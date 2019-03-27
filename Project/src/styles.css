@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+
+.alignLeft { text-align: left }
+.alignCenter { text-align: center }
+.alignRight { text-align: right }
+.greenBackground { background-color: green }
