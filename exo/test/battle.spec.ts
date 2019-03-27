@@ -1,5 +1,6 @@
 import {Battle} from '../src/Battle';
 import { Pokemon } from '../src/Pokemon';
+jest.useFakeTimers();
 
 describe('battle', () => {
     it("A pokemon should be ko", () => {
@@ -14,14 +15,15 @@ describe('battle', () => {
         let battle : Battle = new Battle();
         battle.FightUntilKo(bulbizarre, carapuce);
         battle.rounds.map((r, i) => {
-
             console.log(`Round ${i}
                 ${r.attackingPokemon.name} deal ${r.damage} damage 
                 ${r.defendingPokemon.name} have ${r.defendingPokemon.lifepoint} lifepoint
                 ${r.defendingPokemon.name} ${r.defendingPokeIsKo ? 'is Ko' : 'is not Ko'}`);
         })
+        
         expect(battle.winner.name).toBe("carapuce");
         expect(battle.loser.name).toBe("magicarpe");
-        expect(battle.endOfBattle).toBeTruthy();
+        expect(setTimeout).toBeCalledTimes(2);
+        expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000);
     })
 })

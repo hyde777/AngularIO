@@ -27,27 +27,24 @@ export class Battle {
         
         while (!this.endOfBattle)
         {
-            this.rounds.push(new Round(fastPoke, slowPoke));
-            const attackerPhase = this.rounds[this.currentRound];
-            attackerPhase.Fight();
-            let isKoAttac : boolean = attackerPhase.defendingPokeIsKo;
-            if(isKoAttac) {
-                this.winner = attackerPhase.attackingPokemon;
-                this.loser = attackerPhase.defendingPokemon;
-                this.endOfBattle = true;
-                return;
-            }
+            setTimeout(() => {}, 1000);
+            this.RunRound(new Round(fastPoke, slowPoke));
 
-            this.rounds.push(new Round(slowPoke, fastPoke));
-            const defenderPhase = this.rounds[this.currentRound];
-            defenderPhase.Fight();
-            let isKoDefending = defenderPhase.defendingPokeIsKo;
-            if(isKoDefending){
-                this.winner = defenderPhase.attackingPokemon;
-                this.loser = defenderPhase.defendingPokemon;
-                this.endOfBattle = true;
-                return;
-            }
+            setTimeout(() => {}, 1000);
+            this.RunRound(new Round(slowPoke, fastPoke));
+        }
+    }
+
+    RunRound(round: Round) {
+        this.rounds.push(round);
+        const phase = this.rounds[this.currentRound];
+        phase.Fight();
+        let isKoAttac : boolean = phase.defendingPokeIsKo;
+        if(isKoAttac) {
+            this.winner = phase.attackingPokemon;
+            this.loser = phase.defendingPokemon;
+            this.endOfBattle = true;
+            return;
         }
     }
 }
