@@ -65,6 +65,8 @@ export class BattleService {
       if(isKoAttac) {
           this.winner = phase.attackingPokemon;
           this.loser = phase.defendingPokemon;
+          this.loser.lifepoint = 0;
+          clearInterval(this.interval);
           this.endOfBattle = true;
           return;
       }
