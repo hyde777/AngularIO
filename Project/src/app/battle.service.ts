@@ -22,17 +22,18 @@ export class BattleService {
   interval: any;
 
   constructor(){
-    this.backPokemon = new Pokemon('carapuce', 5);
+    this.backPokemon = new Pokemon('carapuce', 50);
     this.backPokemon.withAttackStat(10).withDefensiveStat(10)
         .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
     this.backPokemonRatio = this.GetPokemonRatio(this.backPokemon);
 
-    this.frontPokemon = new Pokemon('bulbizarre', 5);
+    this.frontPokemon = new Pokemon('bulbizarre', 50);
     this.frontPokemon.withAttackStat(7).withDefensiveStat(12)
         .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
     this.frontPokemonRatio = this.GetPokemonRatio(this.frontPokemon);
     this.rounds = [];
-    if(this.backPokemon.isFasterThan(this.frontPokemon))
+
+    if (this.backPokemon.isFasterThan(this.frontPokemon))
     {
         this.fastPoke = this.backPokemon;
         this.slowPoke = this.frontPokemon;

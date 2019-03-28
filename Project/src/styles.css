@@ -3,12 +3,11 @@
 .alignLeft { text-align: left }
 .alignCenter { text-align: center }
 .alignRight { text-align: right }
-.greenBackground { background-color: green }
+
 .lightBackGround {
   background-color: white;
   opacity: 0.5;
   filter: alpha(opacity=50);
-  box-shadow:0px 0px 10px #000;
 }
 .clignote {
   -webkit-animation-name: clignote;
@@ -20,3 +19,9 @@
   100% { z-index:1; }
 }
 
+textarea{
+  border: none;
+  width: 100%;
+  margin-top: 3%;
+  box-shadow:0px 0px 5px #000;
+}
