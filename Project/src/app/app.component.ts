@@ -1,75 +1,45 @@
-import { Component } from '@angular/core';
-import { Battle } from './lib/Battle';
-import { Pokemon } from './lib/Pokemon';
-import { interval } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { BattleService } from './battle.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'Battle Arena';
-  urlImgBackground = 'assets/img/Battle_Arena.png';
+export class AppComponent implements OnInit {
 
-  backPokemon : Pokemon;
-  backPokemonRatio : number;
-  frontPokemon : Pokemon;
-  frontPokemonRatio : number;
+  title = 'Battle Arena';
 
   pause:boolean = true;
   pauseTxt: 'PAUSE' | 'PLAY' = 'PLAY';
-  battle: Battle;
-  interval: any;
+  frontPokemonRatio: number;
+  backPokemonRatio: number;
 
-  backPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani-back/ambipom.gif'; // 'https://play.pokemonshowdown.com/sprites/smicons-pokeball-sheet.png';
-  frontPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani/pikachu.gif'; // 'https://play.pokemonshowdown.com/sprites/smicons-pokeball-sheet.png';
+  urlImgBackground = 'assets/img/Battle_Arena.png';
+  backPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani-back/ambipom.gif';
+  frontPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani/pikachu.gif';
 
-  constructor() {
-    this.backPokemon = new Pokemon('carapuce', 5);
-    this.backPokemon.withAttackStat(10).withDefensiveStat(10)
-        .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
-    this.backPokemonRatio = this.backPokemon.lifepoint / this.backPokemon.maxLifepoint * 100;
+  constructor(public battleService: BattleService) {}
 
-    this.frontPokemon = new Pokemon('bulbizarre', 5);
-    this.frontPokemon.withAttackStat(7).withDefensiveStat(12)
-        .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
-    this.frontPokemonRatio = Math.floor(this.frontPokemon.lifepoint / this.frontPokemon.maxLifepoint) * 100;
-
-    this.battle = new Battle(this.frontPokemon, this.backPokemon);
+  ngOnInit(): void {
+    console.log(this.battleService)
+    this.frontPokemonRatio = this.battleService.GetPokemonRatio(this.battleService.frontPokemon);
+    this.backPokemonRatio = this.battleService.GetPokemonRatio(this.battleService.backPokemon);
   }
 
   onPause() {
     this.pause = !this.pause;
     if(this.pause)
     {
-      clearInterval(this.interval);
-      this.backPokemonRatio = Math.floor(this.backPokemon.lifepoint / this.backPokemon.maxLifepoint * 100);
-      this.frontPokemonRatio = Math.floor(this.frontPokemon.lifepoint / this.frontPokemon.maxLifepoint * 100);
+      clearInterval(this.battleService.interval);
+      this.frontPokemonRatio = this.battleService.GetPokemonRatio(this.battleService.frontPokemon);
+      this.backPokemonRatio = this.battleService.GetPokemonRatio(this.battleService.backPokemon);
       this.pauseTxt = 'PLAY';
     }
     else
     {
-      this.FightUntilKo()
+      this.battleService.FightUntilKo(this.frontPokemonRatio, this.backPokemonRatio)
       this.pauseTxt = 'PAUSE';
     }
-  }
-
-  FightUntilKo()
-  {
-    let cbFast = () => {
-      this.battle.FightFaster();
-      this.backPokemonRatio = Math.floor(this.backPokemon.lifepoint / this.backPokemon.maxLifepoint * 100);
-      clearInterval(this.interval);
-
-      this.interval = setInterval(() => {
-        this.battle.FightSlower();
-        this.frontPokemonRatio = Math.floor(this.frontPokemon.lifepoint / this.frontPokemon.maxLifepoint * 100);
-        clearInterval(this.interval);
-        this.interval = setInterval(cbFast, 1000);
-      }, 1000);
-    }
-
-    this.interval = setInterval(cbFast, 1000);
   }
 }
