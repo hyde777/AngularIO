@@ -21,18 +21,12 @@ describe('BattleService', () => {
     bulbizarre.withAttackStat(1).withDefensiveStat(1)
         .withLifePoint(15).withLifePoint(15).withMoveBasePower(2);
 
+    // When
     let battle : BattleService = new BattleService();
-//    battle.FightUntilKo();
-    battle.rounds.map((r, i) => {
-        console.log(`Round ${i}
-            ${r.attackingPokemon.name} deal ${r.damage} damage 
-            ${r.defendingPokemon.name} have ${r.defendingPokemon.lifepoint} lifepoint
-            ${r.defendingPokemon.name} ${r.defendingPokeIsKo ? 'is Ko' : 'is not Ko'}`);
-    })
-    
+    battle.FightUntilKo();
+    //Then
     expect(battle.winner.name).toBe("carapuce");
     expect(battle.loser.name).toBe("magicarpe");
-    expect(setTimeout).toBeCalledTimes(2);
-    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000);
+    expect(battle.loser.lifepoint).toBe(0);
   })
 });

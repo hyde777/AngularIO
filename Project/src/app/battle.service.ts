@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Round} from './lib/Round';
 import {Pokemon} from './lib/Pokemon';
+import { from, Observable, interval, ObservableInput } from 'rxjs';
 
 @Injectable()
 export class BattleService {
@@ -20,6 +21,7 @@ export class BattleService {
   frontPokemonStatusBar: 'success' | 'warning' | 'danger' = 'success';
   backPokemonStatusBar: 'success' | 'warning' | 'danger' = 'success';
   interval: any;
+  observable: Observable<Round>;
 
   constructor(){
     this.backPokemon = new Pokemon('carapuce', 50);
@@ -35,61 +37,58 @@ export class BattleService {
 
     if (this.backPokemon.isFasterThan(this.frontPokemon))
     {
-        this.fastPoke = this.backPokemon;
-        this.slowPoke = this.frontPokemon;
+      this.fastPoke = this.backPokemon;
+      this.slowPoke = this.frontPokemon;
     }
     else
     {
-        this.fastPoke = this.frontPokemon;
-        this.slowPoke = this.backPokemon;
+      this.fastPoke = this.frontPokemon;
+      this.slowPoke = this.backPokemon;
     }
-      
+    this.rounds = [];
+    
   }
 
   private GetPokemonRatio(pokemon: Pokemon) {
     return Math.floor(pokemon.lifepoint / pokemon.maxLifepoint * 100);
   }
 
-  private FightFaster() : void {
-      this.RunRound(new Round(this.fastPoke, this.slowPoke));
+  FightFaster() : ObservableInput<Round> {
+    this.RunRound(new Round(this.fastPoke, this.slowPoke));
+    this.UpdateLifeBar()
+    return this.rounds;
   }
 
-  private FightSlower(): void {
-      this.RunRound(new Round(this.slowPoke, this.fastPoke));
+  FightSlower(): ObservableInput<Round> {
+    this.RunRound(new Round(this.slowPoke, this.fastPoke));
+    this.UpdateLifeBar();
+    return this.rounds;
   }
   
   private RunRound(round: Round) {
-      this.rounds.push(round);
-      const phase = this.rounds[this.currentRound];
-      phase.Fight();
-      let isKoAttac : boolean = phase.defendingPokeIsKo;
-      if(isKoAttac) {
-          this.winner = phase.attackingPokemon;
-          this.loser = phase.defendingPokemon;
-          this.loser.lifepoint = 0;
-          clearInterval(this.interval);
-          this.endOfBattle = true;
-          return;
-      }
-      this.currentRound++;
+    this.rounds.push(round);
+    const phase = this.rounds[this.currentRound];
+    phase.Fight();
+    let isKoAttac : boolean = phase.defendingPokeIsKo;
+    if(isKoAttac) {
+        this.winner = phase.attackingPokemon;
+        this.loser = phase.defendingPokemon;
+        this.loser.lifepoint = 0;
+        //clearInterval(this.interval);
+        this.endOfBattle = true;
+        return;
+    }
+    this.currentRound++;
   }
 
-  FightUntilKo()
+  InitBattle() : Observable<any>
   {
-    let cbFast = () => {
-      this.FightFaster();
-      this.UpdateLifeBar();
-      clearInterval(this.interval);
+    return interval(2000);
+  }
 
-      this.interval = setInterval(() => {
-        this.FightSlower();
-        this.UpdateLifeBar();
-        clearInterval(this.interval);
-        this.interval = setInterval(cbFast, 1000);
-      }, 1000);
-    }
-
-    this.interval = setInterval(cbFast, 1000);
+  HandleAttack() : void{
+    this.FightFaster();
+    this.FightSlower();
   }
 
   HandlePause() {
