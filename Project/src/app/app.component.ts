@@ -12,33 +12,31 @@ export class AppComponent implements OnInit {
 
   pause:boolean = true;
   pauseTxt: 'PAUSE' | 'PLAY' = 'PLAY';
-  frontPokemonRatio: number;
-  backPokemonRatio: number;
 
-  urlImgBackground = 'assets/img/Battle_Arena.png';
   backPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani-back/ambipom.gif';
   frontPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani/pikachu.gif';
-
+  urlImgBackground = 'assets/img/Battle_Arena.png';
+  
   constructor(public battleService: BattleService) {}
 
   ngOnInit(): void {
-    console.log(this.battleService)
-    this.frontPokemonRatio = this.battleService.GetPokemonRatio(this.battleService.frontPokemon);
-    this.backPokemonRatio = this.battleService.GetPokemonRatio(this.battleService.backPokemon);
+
   }
 
   onPause() {
     this.pause = !this.pause;
-    if(this.pause)
+    if(this.pause) 
     {
       clearInterval(this.battleService.interval);
-      this.frontPokemonRatio = this.battleService.GetPokemonRatio(this.battleService.frontPokemon);
-      this.backPokemonRatio = this.battleService.GetPokemonRatio(this.battleService.backPokemon);
+      this.battleService.frontPokemonRatio = this.battleService.GetPokemonRatio(this.battleService.frontPokemon);
+      this.battleService.backPokemonRatio = this.battleService.GetPokemonRatio(this.battleService.backPokemon);
+      this.battleService.backPokemonStatusBar = this.battleService.GetColorLifeStatus(this.battleService.backPokemonRatio);
+      this.battleService.frontPokemonStatusBar = this.battleService.GetColorLifeStatus(this.battleService.frontPokemonRatio);
       this.pauseTxt = 'PLAY';
     }
     else
     {
-      this.battleService.FightUntilKo(this.frontPokemonRatio, this.backPokemonRatio)
+      this.battleService.FightUntilKo()
       this.pauseTxt = 'PAUSE';
     }
   }
