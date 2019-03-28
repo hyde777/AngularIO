@@ -20,8 +20,7 @@ export class BattleService {
   backPokemonRatio: number;
   frontPokemonStatusBar: 'success' | 'warning' | 'danger' = 'success';
   backPokemonStatusBar: 'success' | 'warning' | 'danger' = 'success';
-  interval: any;
-  observable: Observable<Round>;
+  fasterRound = true;
 
   constructor(){
     this.backPokemon = new Pokemon('carapuce', 50);
@@ -74,7 +73,6 @@ export class BattleService {
         this.winner = phase.attackingPokemon;
         this.loser = phase.defendingPokemon;
         this.loser.lifepoint = 0;
-        //clearInterval(this.interval);
         this.endOfBattle = true;
         return;
     }
@@ -83,19 +81,20 @@ export class BattleService {
 
   InitBattle() : Observable<any>
   {
-    return interval(2000);
+    return interval(1000);
   }
 
   HandleAttack() : void{
-    this.FightFaster();
-    this.FightSlower();
+    if(this.fasterRound) {
+      this.FightFaster();
+      this.fasterRound = false;
+    } else {
+      this.FightSlower();
+      this.fasterRound = true;
+    }
+    
   }
-
-  HandlePause() {
-    clearInterval(this.interval);
-    this.UpdateLifeBar();
-  }
-
+  
   private UpdateLifeBar() {
     this.frontPokemonRatio = this.GetPokemonRatio(this.frontPokemon);
     this.backPokemonRatio = this.GetPokemonRatio(this.backPokemon);

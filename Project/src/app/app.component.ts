@@ -27,13 +27,11 @@ export class AppComponent {
     this.pause = !this.pause;
     if(this.pause) 
     {
-      // this.battleService.HandlePause();
       this.subscribe.unsubscribe();
       this.pauseTxt = 'PLAY';
     }
     else
     {
-      // this.battleService.FightUntilKo()
       this.subscribe = this.battleService.InitBattle()
       .pipe(
         filter(() => !this.pause),
@@ -41,7 +39,7 @@ export class AppComponent {
       .subscribe(
         next => console.log(next),
         error => console.error(error));
-      this.pauseTxt = 'PAUSE';
+       this.pauseTxt = 'PAUSE';
     }
   }
 }
