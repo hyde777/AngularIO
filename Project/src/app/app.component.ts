@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   backPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani-back/ambipom.gif';
   frontPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani/pikachu.gif';
   urlImgBackground = 'assets/img/Battle_Arena.png';
-  
+
   constructor(public battleService: BattleService) {}
 
   ngOnInit(): void {
@@ -27,11 +27,7 @@ export class AppComponent implements OnInit {
     this.pause = !this.pause;
     if(this.pause) 
     {
-      clearInterval(this.battleService.interval);
-      this.battleService.frontPokemonRatio = this.battleService.GetPokemonRatio(this.battleService.frontPokemon);
-      this.battleService.backPokemonRatio = this.battleService.GetPokemonRatio(this.battleService.backPokemon);
-      this.battleService.backPokemonStatusBar = this.battleService.GetColorLifeStatus(this.battleService.backPokemonRatio);
-      this.battleService.frontPokemonStatusBar = this.battleService.GetColorLifeStatus(this.battleService.frontPokemonRatio);
+      this.battleService.HandlePause();
       this.pauseTxt = 'PLAY';
     }
     else

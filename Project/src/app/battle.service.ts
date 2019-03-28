@@ -45,7 +45,7 @@ export class BattleService {
       
   }
 
-  GetPokemonRatio(pokemon: Pokemon) {
+  private GetPokemonRatio(pokemon: Pokemon) {
     return Math.floor(pokemon.lifepoint / pokemon.maxLifepoint * 100);
   }
 
@@ -75,18 +75,12 @@ export class BattleService {
   {
     let cbFast = () => {
       this.FightFaster();
-      this.frontPokemonRatio = this.GetPokemonRatio(this.frontPokemon);
-      this.backPokemonRatio = this.GetPokemonRatio(this.backPokemon);
-      this.frontPokemonStatusBar = this.GetColorLifeStatus(this.frontPokemonRatio);
-      this.backPokemonStatusBar = this.GetColorLifeStatus(this.backPokemonRatio);
+      this.UpdateLifeBar();
       clearInterval(this.interval);
 
       this.interval = setInterval(() => {
         this.FightSlower();
-        this.frontPokemonRatio = this.GetPokemonRatio(this.frontPokemon);
-        this.backPokemonRatio = this.GetPokemonRatio(this.backPokemon);
-        this.frontPokemonStatusBar = this.GetColorLifeStatus(this.frontPokemonRatio);
-        this.backPokemonStatusBar = this.GetColorLifeStatus(this.backPokemonRatio);
+        this.UpdateLifeBar();
         clearInterval(this.interval);
         this.interval = setInterval(cbFast, 1000);
       }, 1000);
@@ -95,7 +89,19 @@ export class BattleService {
     this.interval = setInterval(cbFast, 1000);
   }
 
-  GetColorLifeStatus(lifePercent: number) {
+  HandlePause() {
+    clearInterval(this.interval);
+    this.UpdateLifeBar();
+  }
+
+  private UpdateLifeBar() {
+    this.frontPokemonRatio = this.GetPokemonRatio(this.frontPokemon);
+    this.backPokemonRatio = this.GetPokemonRatio(this.backPokemon);
+    this.frontPokemonStatusBar = this.GetColorLifeStatus(this.frontPokemonRatio);
+    this.backPokemonStatusBar = this.GetColorLifeStatus(this.backPokemonRatio);
+  }
+
+  private GetColorLifeStatus(lifePercent: number) {
     let statusColor: 'success' | 'warning' | 'danger' = 'success';
     if (lifePercent <= 25) {
       statusColor = 'danger';
