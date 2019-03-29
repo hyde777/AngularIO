@@ -48,16 +48,14 @@ export class BattleService {
     return Math.floor(pokemon.lifepoint / pokemon.maxLifepoint * 100);
   }
 
-  FightFaster(): ObservableInput<Round> {
+  private FightFaster() : void {
     this.RunRound(new Round(this.fastPoke, this.slowPoke));
-    this.UpdateLifeBar();
-    return this.rounds;
+    this.UpdateLifeBar()
   }
 
-  FightSlower(): ObservableInput<Round> {
+  private FightSlower(): void{
     this.RunRound(new Round(this.slowPoke, this.fastPoke));
     this.UpdateLifeBar();
-    return this.rounds;
   }
 
   private RunRound(round: Round) {
@@ -79,8 +77,8 @@ export class BattleService {
     return interval(1000);
   }
 
-  HandleAttack(): void {
-    if (this.fasterRound) {
+  HandleAttack() : void {
+    if(this.fasterRound) {
       this.FightFaster();
       this.fasterRound = false;
     } else {

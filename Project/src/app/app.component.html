@@ -4,42 +4,4 @@
     Welcome to {{ title }}!
   </h1>
 </div>
-
-<div class="container" [style.background-image]="'url(' + urlImgBackground + ')'" [ngStyle]="{'background-size': 'cover','background-repeat': 'no-repeat'}">
-
-  <div class="row justify-content-end">
-    <div class="col-sm-4 lightBackGround">
-      <div class="alignRight">{{battleService.frontPokemon.lifepoint}}/{{battleService.frontPokemon.maxLifepoint}}</div>
-      <app-progress-bar class="nb" [percentLife]=battleService.frontPokemonRatio [statusBar]=battleService.frontPokemonStatusBar></app-progress-bar>
-      <div class="alignCenter">{{battleService.frontPokemon.name}}</div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-4 alignCenter clignote">
-      <img [attr.src]=backPokemonUrlImg alt="">
-    </div>
-    <div class="col-sm-4 alignCenter">
-        <button type="button" (click)="onPause()" class="btn btn-success">{{pauseTxt}}</button>
-    </div>
-    <div class="col-sm-4 alignCenter">
-      <img [attr.src]=frontPokemonUrlImg alt="">
-    </div>
-  </div>
-
-  <div class="row justify-content-start">
-    <div class="col-sm-4 lightBackGround">
-      <div class="alignCenter">{{battleService.backPokemon.name}}</div>
-      <app-progress-bar [percentLife]=battleService.backPokemonRatio [statusBar]=battleService.backPokemonStatusBar></app-progress-bar>
-      <div>{{battleService.backPokemon.lifepoint}}/{{battleService.backPokemon.maxLifepoint}}</div>
-    </div>
-    <div class="col-sm-3">
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <app-battle-log></app-battle-log>
-</div>
-
 <router-outlet></router-outlet>
