@@ -6,16 +6,24 @@ import { AppComponent } from './app.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { BattleService } from './battle.service';
 import { BattleLogComponent } from './battle-log/battle-log.component';
+import { BattleComponent } from './battle/battle.component';
+import { Routes, RouterModule } from '@angular/router';
+
+const routes: Routes = [
+  { path: '', component: BattleComponent } // path: '/'
+]
 
 @NgModule({
   declarations: [
     AppComponent,
     ProgressBarComponent,
-    BattleLogComponent
+    BattleLogComponent,
+    BattleComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [
     BattleService
