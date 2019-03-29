@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { BattleService } from '../battle.service';
 import { filter, mergeMap, debounce, delay, map } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
+import { PokemonService } from '../pokemon.service';
 
 @Component({
   selector: 'app-battle',
@@ -19,7 +20,16 @@ export class BattleComponent{
   urlImgBackground = 'assets/img/Battle_Arena.png';
   subscribe: Subscription;
 
-  constructor(public battleService: BattleService) {
+  constructor(private battleService: BattleService, private pokeService: PokemonService) {
+    this.pokeService.getPokemon('https://pokeapi.co/api/v2/pokemon/1/').subscribe(poke => {
+      battleService.backPokemon = poke;
+      console.log(battleService.fastPoke)
+      console.log(battleService.slowPoke)
+    });
+    this.pokeService.getPokemon('https://pokeapi.co/api/v2/pokemon/4/').subscribe(poke => {
+      battleService.frontPokemon = poke;
+    });
+
   }
 
   onPause() {

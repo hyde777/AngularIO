@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import {Round} from './lib/Round';
 import {Pokemon} from './lib/Pokemon';
-import { Observable, interval, ObservableInput } from 'rxjs';
+import { Observable, interval, ObservableInput, from, combineLatest, forkJoin } from 'rxjs';
+import { PokemonService } from './pokemon.service';
+import { mergeMap } from 'rxjs/operators';
 
 @Injectable()
-export class BattleService {
+export class BattleService{
 
   currentRound = 0;
   rounds: Round[];
@@ -22,25 +24,24 @@ export class BattleService {
   backPokemonStatusBar: 'success' | 'warning' | 'danger' = 'success';
   fasterRound = true;
 
-  constructor() {
-    this.backPokemon = new Pokemon('carapuce', 50);
-    this.backPokemon.withAttackStat(10).withDefensiveStat(10)
-        .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
-    this.backPokemonRatio = BattleService.GetPokemonRatio(this.backPokemon);
+  constructor(private pokeService: PokemonService) {
+    let frontOb =this.pokeService.getPokemon('https://pokeapi.co/api/v2/pokemon/1/')
+      .pipe(mergeMap(poke => {
+        this.backPokemon = poke;
+        this.backPokemonRatio = BattleService.GetPokemonRatio(this.backPokemon);
+        return this.pokeService.getPokemon('https://pokeapi.co/api/v2/pokemon/4/');
+      })).subscribe(poke => {
+        this.frontPokemon = poke;
+        this.frontPokemonRatio = BattleService.GetPokemonRatio(this.frontPokemon);
+        if (this.backPokemon.isFasterThan(this.frontPokemon)) {
+          this.fastPoke = this.backPokemon;
+          this.slowPoke = this.frontPokemon;
+        } else {
+          this.fastPoke = this.frontPokemon;
+          this.slowPoke = this.backPokemon;
+        }
+      });
 
-    this.frontPokemon = new Pokemon('bulbizarre', 50);
-    this.frontPokemon.withAttackStat(7).withDefensiveStat(12)
-        .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
-    this.frontPokemonRatio = BattleService.GetPokemonRatio(this.frontPokemon);
-    this.rounds = [];
-
-    if (this.backPokemon.isFasterThan(this.frontPokemon)) {
-      this.fastPoke = this.backPokemon;
-      this.slowPoke = this.frontPokemon;
-    } else {
-      this.fastPoke = this.frontPokemon;
-      this.slowPoke = this.backPokemon;
-    }
     this.rounds = [];
   }
 

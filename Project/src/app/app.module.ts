@@ -9,6 +9,7 @@ import { BattleLogComponent } from './battle-log/battle-log.component';
 import { BattleComponent } from './battle/battle.component';
 import { Routes, RouterModule } from '@angular/router';
 import {PokemonService} from "./pokemon.service";
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: '', component: BattleComponent } // path: '/'
@@ -24,6 +25,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     RouterModule.forRoot(routes)
   ],
   providers: [

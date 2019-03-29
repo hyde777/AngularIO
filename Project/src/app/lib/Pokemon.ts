@@ -1,18 +1,16 @@
 //fetch("https://pokeapi.co/api/v2/pokemon1")
 
 export class Pokemon {
-    public attackStat: number;
-    public defensiveStat: number;
-    public lifepoint: number;
-    public maxLifepoint: number;
-    public moveBasePower: number;
-    public speed: number;
 
     constructor(public name: string, 
-                public level: number)
+                public level: number,
+                public attackStat: number,
+                public defensiveStat: number,
+                public lifepoint: number,
+                public maxLifepoint: number,
+                public moveBasePower: number,
+                public speed: number)
     {
-        this.name = name;
-        this.level = level;
     }
 
     withSpeed(speed: number) {
