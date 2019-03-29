@@ -36,6 +36,7 @@ export class AppComponent {
       this.subscribe = this.battleService.InitBattle()
       .pipe(
         filter(() => !this.pause),
+        filter(() => !this.battleService.endOfBattle),
         map(() => this.battleService.HandleAttack()))
       .subscribe(
         next => console.log(next),
