@@ -1,7 +1,7 @@
 Fight :
 
   <li *ngFor="let round of battleService.rounds">
-    {{ round.attackingPokemon.name }} inflige {{round.attackingPokemon.attackStat}} dégats à {{ round.defendingPokemon.name}}
+    {{ round.attackingPokemon.name }} inflige {{round.damage}} dégats à {{ round.defendingPokemon.name}}
   </li>
 {{battleService.endOfBattle ? battleService.loser.name + ' lost the battle' : ''}}
 
