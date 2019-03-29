@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Round} from '../lib/Round';
+import {BattleService} from '../battle.service';
 
 @Component({
   selector: 'app-battle-log',
@@ -7,7 +9,7 @@ import { Component } from '@angular/core';
 })
 export class BattleLogComponent {
 
-  constructor() {
+  constructor(private battleService: BattleService) {
   }
 
 }

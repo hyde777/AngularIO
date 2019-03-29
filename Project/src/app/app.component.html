@@ -22,7 +22,7 @@
     <div class="col-sm-4 alignCenter">
         <button type="button" (click)="onPause()" class="btn btn-success">{{pauseTxt}}</button>
     </div>
-    <div class="col-sm-4 alignCenter clignote">
+    <div class="col-sm-4 alignCenter">
       <img [attr.src]=frontPokemonUrlImg alt="">
     </div>
   </div>
@@ -39,7 +39,7 @@
 </div>
 
 <div class="container">
-
+  <app-battle-log></app-battle-log>
 </div>
 
 <router-outlet></router-outlet>

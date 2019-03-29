@@ -1,4 +1,7 @@
-<textarea rows="5" readonly>
-  [15h 36min 20sec] Il attaque
-  [15h 36min 21sec] Il lui reste
-</textarea>
+Fight :
+
+  <li *ngFor="let round of battleService.rounds">
+    {{ round.attackingPokemon.name }} inflige {{round.attackingPokemon.attackStat}} damages à {{ round.defendingPokemon.name}}
+  </li>
+{{battleService.endOfBattle ? battleService.loser.name + ' lost the battle' : ''}}
+

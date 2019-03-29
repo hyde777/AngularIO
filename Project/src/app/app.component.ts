@@ -22,9 +22,12 @@ export class AppComponent {
   urlImgBackground = 'assets/img/Battle_Arena.png';
   subscribe: Subscription;
   roundLog: Round[];
+  pokemonNameKo: string;
 
   constructor(public battleService: BattleService) {
     this.roundLog = this.battleService.rounds;
+    this.pokemonNameKo = !this.battleService.endOfBattle ? 'test' : 'Le perdant est : ' + this.battleService.loser.name;
+    console.log(this.pokemonNameKo);
   }
 
   onPause() {
@@ -43,5 +46,7 @@ export class AppComponent {
         error => console.error(error));
       this.pauseTxt = 'PAUSE';
     }
+
+
   }
 }
