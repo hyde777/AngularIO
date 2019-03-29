@@ -40,6 +40,9 @@
 
 <div class="container">
   <app-battle-log></app-battle-log>
+  <li *ngFor="let round of battleService.rounds">
+    test {{ round.damage}}
+  </li>
 </div>
 
 <router-outlet></router-outlet>

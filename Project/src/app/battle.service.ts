@@ -1,60 +1,56 @@
 import { Injectable } from '@angular/core';
 import {Round} from './lib/Round';
 import {Pokemon} from './lib/Pokemon';
-import { from, Observable, interval, ObservableInput } from 'rxjs';
+import { Observable, interval, ObservableInput } from 'rxjs';
 
 @Injectable()
 export class BattleService {
 
-  currentRound: number = 0;
+  currentRound = 0;
   rounds: Round[];
-  endOfBattle: boolean = false;
+  endOfBattle = false;
   winner: Pokemon;
   loser: Pokemon;
   slowPoke: Pokemon;
   fastPoke: Pokemon;
 
-  backPokemon : Pokemon;
-  frontPokemon : Pokemon;
+  backPokemon: Pokemon;
+  frontPokemon: Pokemon;
   frontPokemonRatio: number;
   backPokemonRatio: number;
   frontPokemonStatusBar: 'success' | 'warning' | 'danger' = 'success';
   backPokemonStatusBar: 'success' | 'warning' | 'danger' = 'success';
   fasterRound = true;
 
-  constructor(){
+  constructor() {
     this.backPokemon = new Pokemon('carapuce', 50);
     this.backPokemon.withAttackStat(10).withDefensiveStat(10)
         .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
-    this.backPokemonRatio = this.GetPokemonRatio(this.backPokemon);
+    this.backPokemonRatio = BattleService.GetPokemonRatio(this.backPokemon);
 
     this.frontPokemon = new Pokemon('bulbizarre', 50);
     this.frontPokemon.withAttackStat(7).withDefensiveStat(12)
         .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
-    this.frontPokemonRatio = this.GetPokemonRatio(this.frontPokemon);
+    this.frontPokemonRatio = BattleService.GetPokemonRatio(this.frontPokemon);
     this.rounds = [];
 
-    if (this.backPokemon.isFasterThan(this.frontPokemon))
-    {
+    if (this.backPokemon.isFasterThan(this.frontPokemon)) {
       this.fastPoke = this.backPokemon;
       this.slowPoke = this.frontPokemon;
-    }
-    else
-    {
+    } else {
       this.fastPoke = this.frontPokemon;
       this.slowPoke = this.backPokemon;
     }
     this.rounds = [];
-    
   }
 
-  private GetPokemonRatio(pokemon: Pokemon) {
+  private static GetPokemonRatio(pokemon: Pokemon) {
     return Math.floor(pokemon.lifepoint / pokemon.maxLifepoint * 100);
   }
 
-  FightFaster() : ObservableInput<Round> {
+  FightFaster(): ObservableInput<Round> {
     this.RunRound(new Round(this.fastPoke, this.slowPoke));
-    this.UpdateLifeBar()
+    this.UpdateLifeBar();
     return this.rounds;
   }
 
@@ -63,13 +59,13 @@ export class BattleService {
     this.UpdateLifeBar();
     return this.rounds;
   }
-  
+
   private RunRound(round: Round) {
     this.rounds.push(round);
     const phase = this.rounds[this.currentRound];
     phase.Fight();
-    let isKoAttac : boolean = phase.defendingPokeIsKo;
-    if(isKoAttac) {
+    const isKoAttac: boolean = phase.defendingPokeIsKo;
+    if (isKoAttac) {
         this.winner = phase.attackingPokemon;
         this.loser = phase.defendingPokemon;
         this.loser.lifepoint = 0;
@@ -79,25 +75,23 @@ export class BattleService {
     this.currentRound++;
   }
 
-  InitBattle() : Observable<any>
-  {
+  InitBattle(): Observable<any> {
     return interval(1000);
   }
 
-  HandleAttack() : void{
-    if(this.fasterRound) {
+  HandleAttack(): void {
+    if (this.fasterRound) {
       this.FightFaster();
       this.fasterRound = false;
     } else {
       this.FightSlower();
       this.fasterRound = true;
     }
-    
   }
-  
+
   private UpdateLifeBar() {
-    this.frontPokemonRatio = this.GetPokemonRatio(this.frontPokemon);
-    this.backPokemonRatio = this.GetPokemonRatio(this.backPokemon);
+    this.frontPokemonRatio = BattleService.GetPokemonRatio(this.frontPokemon);
+    this.backPokemonRatio = BattleService.GetPokemonRatio(this.backPokemon);
     this.frontPokemonStatusBar = this.GetColorLifeStatus(this.frontPokemonRatio);
     this.backPokemonStatusBar = this.GetColorLifeStatus(this.backPokemonRatio);
   }
