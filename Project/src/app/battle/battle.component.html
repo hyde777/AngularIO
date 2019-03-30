@@ -10,13 +10,13 @@
 
   <div class="row">
     <div class="col-sm-4 alignCenter clignote">
-      <img [attr.src]=backPokemonUrlImg alt="">
+      <img [attr.src]=this.battleService.backPokemonUrlImg alt="">
     </div>
     <div class="col-sm-4 alignCenter">
         <button type="button" (click)="onPause()" class="btn btn-success">{{pauseTxt}}</button>
     </div>
     <div class="col-sm-4 alignCenter clignote">
-      <img [attr.src]=frontPokemonUrlImg alt="">
+      <img [attr.src]=this.battleService.frontPokemonUrlImg alt="">
     </div>
   </div>
 

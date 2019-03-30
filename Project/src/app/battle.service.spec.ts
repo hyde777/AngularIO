@@ -14,16 +14,16 @@ describe('BattleService', () => {
 
   it("A pokemon should be ko", () => {
     // Given
-    let carapuce = new Pokemon("carapuce", 5);
+    let carapuce = new Pokemon("carapuce", 5, 0, 0, 0, 0 ,0 ,0);
     carapuce.withAttackStat(10).withDefensiveStat(10)
         .withLifePoint(30).withMaxLifePoint(30).withMoveBasePower(10);
-    let bulbizarre = new Pokemon("magicarpe", 2);
+    let bulbizarre = new Pokemon("magicarpe", 2, 0, 0, 0, 0, 0, 0);
     bulbizarre.withAttackStat(1).withDefensiveStat(1)
         .withLifePoint(15).withLifePoint(15).withMoveBasePower(2);
 
     // When
     let battle : BattleService = new BattleService();
-    battle.FightUntilKo();
+    battle.HandleAttack();
     //Then
     expect(battle.winner.name).toBe("carapuce");
     expect(battle.loser.name).toBe("magicarpe");

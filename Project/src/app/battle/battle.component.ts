@@ -15,20 +15,12 @@ export class BattleComponent{
   pause:boolean = true;
   pauseTxt: 'PAUSE' | 'PLAY' = 'PLAY';
 
-  backPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani-back/ambipom.gif';
-  frontPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani/pikachu.gif';
+
   urlImgBackground = 'assets/img/Battle_Arena.png';
   subscribe: Subscription;
 
   constructor(private battleService: BattleService, private pokeService: PokemonService) {
-    this.pokeService.getPokemon('https://pokeapi.co/api/v2/pokemon/1/').subscribe(poke => {
-      battleService.backPokemon = poke;
-      console.log(battleService.fastPoke)
-      console.log(battleService.slowPoke)
-    });
-    this.pokeService.getPokemon('https://pokeapi.co/api/v2/pokemon/4/').subscribe(poke => {
-      battleService.frontPokemon = poke;
-    });
+    
 
   }
 

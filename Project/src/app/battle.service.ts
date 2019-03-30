@@ -23,7 +23,8 @@ export class BattleService{
   frontPokemonStatusBar: 'success' | 'warning' | 'danger' = 'success';
   backPokemonStatusBar: 'success' | 'warning' | 'danger' = 'success';
   fasterRound = true;
-
+  backPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani-back/ambipom.gif';
+  frontPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani/pikachu.gif';
   constructor(private pokeService: PokemonService) {
     let frontOb =this.pokeService.getPokemon('https://pokeapi.co/api/v2/pokemon/1/')
       .pipe(mergeMap(poke => {
@@ -40,6 +41,8 @@ export class BattleService{
           this.fastPoke = this.frontPokemon;
           this.slowPoke = this.backPokemon;
         }
+        this.backPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani-back/'+ this.backPokemon.name+'.gif';
+        this.frontPokemonUrlImg = 'https://play.pokemonshowdown.com/sprites/xyani/' + this.frontPokemon.name + '.gif';
       });
 
     this.rounds = [];
